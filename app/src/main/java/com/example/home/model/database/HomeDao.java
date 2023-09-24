@@ -1,6 +1,7 @@
 package com.example.home.model.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -14,6 +15,9 @@ public interface HomeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void add(HomeResult.Data.Datas...datas);
 
-    @Query("SELECT * FROM HomeDatas LIMIT 20")
+    @Query("DELETE FROM HomeDatas")
+    void clearCache();//直接清空缓存数据，配合上面的添加达成重写效果
+
+    @Query("SELECT * FROM HomeDatas LIMIT 15")
     List<HomeResult.Data.Datas> getCacheData();
 }

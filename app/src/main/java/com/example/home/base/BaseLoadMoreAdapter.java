@@ -1,6 +1,7 @@
 package com.example.home.base;
 
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,14 @@ import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.home.R;
+
+import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public abstract class BaseLoadMoreAdapter<T extends ViewDataBinding>
@@ -40,6 +45,11 @@ public abstract class BaseLoadMoreAdapter<T extends ViewDataBinding>
     }
 
     @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        binding = DataBindingUtil.getBinding(holder.itemView);
+    }
+
+    @Override
     public int getItemViewType(int position) {
         //给最后一个item设置foot_view
         if (position + 1 == getItemCount()) {
@@ -52,17 +62,30 @@ public abstract class BaseLoadMoreAdapter<T extends ViewDataBinding>
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+        Log.d("MainActivity", "onAttachedToRecyclerView: ");
+
+        //gridLayout下给footer页面加权使其单独占用一列
+        LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        if (manager instanceof GridLayoutManager){
+            ((GridLayoutManager) manager).setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return position + 1 == getItemCount()? 2 : 1;
+                }
+            });
+        }
+
+        //滑动到底部时候的监听回调
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             private boolean isSlidingUpward = false;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
                     int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
                     int itemCount = manager.getItemCount();
                     if(lastItemPosition == (itemCount - 1) && isSlidingUpward){
-                        loadMoreAction();
+                        loadMoreAction();//滑动到底部且继续在上滑操作时执行加载
                     }
                 }
             }
@@ -79,14 +102,14 @@ public abstract class BaseLoadMoreAdapter<T extends ViewDataBinding>
 
     abstract protected int getItemLayoutRes();
 
-    class BaseViewHolder extends RecyclerView.ViewHolder{
+    static class BaseViewHolder extends RecyclerView.ViewHolder{
 
         public BaseViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
 
-    class FootViewHolder extends RecyclerView.ViewHolder{
+    static class FootViewHolder extends RecyclerView.ViewHolder{
 
         public FootViewHolder(@NonNull View itemView) {
             super(itemView);

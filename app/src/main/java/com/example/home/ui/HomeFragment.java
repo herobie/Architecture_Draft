@@ -5,7 +5,9 @@ import android.util.Log;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.home.BR;
 import com.example.home.R;
@@ -27,7 +29,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     protected void initParams() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             //rv初始化
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2);
             binding.rv.setLayoutManager(layoutManager);
             HomeAdapter homeAdapter = new HomeAdapter(getContext(), viewModel);
             binding.rv.setAdapter(homeAdapter);
@@ -56,7 +59,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
                             @Override
                             public void onFailure(Call<HomeResult> call, Throwable t) {
-
+                                List<HomeResult.Data.Datas> datas = viewModel.getCacheData();
+                                viewModel.getDisplayData().setValue(datas);
                             }
                         });
             }

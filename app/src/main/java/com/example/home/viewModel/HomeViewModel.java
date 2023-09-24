@@ -26,10 +26,16 @@ public class HomeViewModel extends BaseViewModel<HomeModel> {
 
     }
 
+    //重写缓存数据
     public void overrideCacheData(HomeResult.Data.Datas...datas){
         if (model != null){
             model.overrideCacheData(datas);
         }
+    }
+
+    //获取缓存数据
+    public List<HomeResult.Data.Datas> getCacheData(){
+        return model.getCacheData();
     }
 
     public MutableLiveData<List<HomeResult.Data.Datas>> getDisplayData() {
