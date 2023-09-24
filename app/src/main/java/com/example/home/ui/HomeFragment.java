@@ -1,13 +1,12 @@
 package com.example.home.ui;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.home.BR;
 import com.example.home.R;
@@ -19,6 +18,7 @@ import com.example.home.ui.adapter.HomeAdapter;
 import com.example.home.viewModel.HomeViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,12 +36,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             binding.rv.setAdapter(homeAdapter);
 
             //获取网络数据后将数据传给adapter
-            viewModel.getDisplayData().observe(getLifeCycleOwner(), new Observer<List<HomeResult.Data.Datas>>() {
-                @Override
-                public void onChanged(List<HomeResult.Data.Datas> datas) {
-                    Log.d("MainActivity", "onChanged: ");
-                    homeAdapter.setDatas(datas);
-                }
+            viewModel.getDisplayData().observe(getLifeCycleOwner(), datas -> {
+                Log.d("MainActivity", "onChanged: ");
+                homeAdapter.setDatas(datas);
             });
 
             //如果创建fragment时没有数据，则加载第一页的内容
@@ -51,14 +48,22 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                         .getProjectResult(1, 294)
                         .enqueue(new Callback<HomeResult>() {
                             @Override
-                            public void onResponse(Call<HomeResult> call, Response<HomeResult> response) {
-                                List<HomeResult.Data.Datas> datas = response.body().getProjectData().getDatas();
-                                viewModel.getDisplayData().setValue(datas);
-                                viewModel.overrideCacheData(datas.toArray(new HomeResult.Data.Datas[0]));
+                            public void onResponse(@NonNull Call<HomeResult> call, @NonNull Response<HomeResult> response) {
+                                HomeResult homeResult = Objects.requireNonNull(response.body());//可能需要get一下errorCode
+                                if (EasyHttp.isLoadingSuccess(homeResult.getErrorCode())){
+                                    List<HomeResult.Data.Datas> datas
+                                            = homeResult.getProjectData().getDatas();
+                                    viewModel.getDisplayData().setValue(datas);
+                                    viewModel.overrideCacheData(datas.toArray(new HomeResult.Data.Datas[0]));
+                                }else {//请求异常会调用缓存数据
+                                    Toast.makeText(getContext(), homeResult.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                                    List<HomeResult.Data.Datas> datas = viewModel.getCacheData();
+                                    viewModel.getDisplayData().setValue(datas);
+                                }
                             }
 
                             @Override
-                            public void onFailure(Call<HomeResult> call, Throwable t) {
+                            public void onFailure(@NonNull Call<HomeResult> call, @NonNull Throwable t) {
                                 List<HomeResult.Data.Datas> datas = viewModel.getCacheData();
                                 viewModel.getDisplayData().setValue(datas);
                             }

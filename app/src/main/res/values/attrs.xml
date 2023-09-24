@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextImageView">
+        <attr name="imageWidth" format="dimension"/>
+        <attr name="imageHeight" format="dimension"/>
+        <attr name="imageScaleX" format="float"/>
+        <attr name="imageScaleY" format="float"/>
+        <attr name="textWidth" format="dimension"/>
+        <attr name="textHeight" format="dimension"/>
+        <attr name="scaleProportionXY" format="float"/>
+        <attr name="imageWeight" format="float"/>
+        <attr name="textWeight" format="float"/>
+        <attr name="android:text"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
+        <attr name="background"/>
+        <attr name="android:scaleType"/>
+    </declare-styleable>
+
+    <declare-styleable name="CaptchaView">
+        <attr name="captchaNumbers" format="integer"/>
+        <attr name="underlineColor" format="color"/>
+        <attr name="editTextSpacing" format="dimension"/>
+        <attr name="android:textCursorDrawable"/>
+        <attr name="android:inputType"/>
+        <attr name="android:text"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textSize"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:title="@string/home"
+        android:icon="@drawable/selector_home"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/wardrobe"
+        android:title="@string/wardrobe"
+        android:icon="@drawable/selector_wardrobe"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/community"
+        android:title="@string/moments"
+        android:icon="@drawable/selector_community"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/profile"
+        android:title="@string/me"
+        android:icon="@drawable/selector_profile"
+        app:showAsAction="ifRoom"/>
+</menu>

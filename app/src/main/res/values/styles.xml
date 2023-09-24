@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextInputEditRadius" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomStart">50dp</item>
+        <item name="boxCornerRadiusBottomEnd">50dp</item>
+        <item name="boxCornerRadiusTopStart">50dp</item>
+        <item name="boxCornerRadiusTopEnd">50dp</item>
+    </style>
+
+    <style name="TextInputEditCover" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!--完善资料页面TextInputLayout样式-->
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxStrokeColor">@color/grey_100</item>
+        <item name="boxBackgroundColor">@color/grey_100</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <style name="TextInputEditTextCover" parent="ThemeOverlay.Material3.TextInputEditText">
+        <!--完善资料页面TextInputEditText样式-->
+        <item name="singleLine">true</item>
+        <item name="fontFamily">sans-serif-black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="paddingStart">42dp</item>
+        <item name="paddingEnd">42dp</item>
+    </style>
+
+    <style name="descTextDefaultStyle">
+        <!--多数介绍性文字的字体样式-->
+        <item name="android:textColor">@color/grey_900</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="CheckBoxTheme">
+        <!--checkBox的选中样式-->
+        <item name="colorAccent">@color/yellow_500</item><!--选中颜色-->
+        <item name="colorControlNormal">@color/black</item><!--未选中颜色-->
+    </style>
+
+    <style name="TitleCenteredToolbarStyle_16" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <!--标题大小为16sp的toolbar-->
+        <item name="titleCentered">true</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">3.2sp</item>
+    </style>
+
+    <style name="TitleCenteredToolbarStyle_18" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <!--标题大小为18sp的toolbar-->
+        <item name="titleCentered">true</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">-1.6sp</item>
+    </style>
+
+</resources>

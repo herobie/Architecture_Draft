@@ -3,19 +3,17 @@ package com.example.home.viewModel;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.home.base.BaseViewModel;
 import com.example.home.model.HomeModel;
 import com.example.home.model.bean.HomeResult;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeViewModel extends BaseViewModel<HomeModel> {
     private int currentPage = 1;
-    private MutableLiveData<List<HomeResult.Data.Datas>> displayData = new MutableLiveData<>();
+    private final MutableLiveData<List<HomeResult.Data.Datas>> displayData = new MutableLiveData<>();
     public HomeViewModel(@NonNull Application application) {
         super(application);
         model = new HomeModel(application);

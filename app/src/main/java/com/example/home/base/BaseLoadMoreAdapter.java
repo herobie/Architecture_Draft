@@ -10,15 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.home.R;
-
-import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public abstract class BaseLoadMoreAdapter<T extends ViewDataBinding>
@@ -26,10 +22,6 @@ public abstract class BaseLoadMoreAdapter<T extends ViewDataBinding>
     protected T binding;
     protected final int TYPE_ITEM = 1001;
     protected final int TYPE_FOOTER = 1002;
-
-    protected final int STATE_LOADING = 0;
-    protected final int STATE_FINISHED = 1;
-    protected final int STATE_FAILED = 2;
 
     @NonNull
     @Override
@@ -82,6 +74,7 @@ public abstract class BaseLoadMoreAdapter<T extends ViewDataBinding>
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    assert manager != null;
                     int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
                     int itemCount = manager.getItemCount();
                     if(lastItemPosition == (itemCount - 1) && isSlidingUpward){

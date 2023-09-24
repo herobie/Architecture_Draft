@@ -1,7 +1,5 @@
 package com.example.home.ui.adapter;
 
-import android.app.Activity;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,7 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.List;
 
 public class FragmentsAdapter extends FragmentStateAdapter {
-    private List<Fragment> fragments;
+    private final List<Fragment> fragments;
 
     public FragmentsAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, List<Fragment> fragments) {
         super(fragmentManager, lifecycle);

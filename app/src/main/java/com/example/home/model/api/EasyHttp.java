@@ -47,5 +47,7 @@ public class EasyHttp {
                 .create(ApiStore.class);
     }
 
-
+    public static boolean isLoadingSuccess(int errorCode){
+        return errorCode == 0;//处理一下各种异常代码
+    }
 }

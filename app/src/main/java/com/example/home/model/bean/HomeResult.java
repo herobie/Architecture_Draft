@@ -13,8 +13,15 @@ public class HomeResult {
     @Expose
     @SerializedName("data")
     private Data data;
+
     @Expose
     private int curPage;
+
+    @Expose
+    private int errorCode;
+
+    @Expose
+    private String errorMsg;
     public static class Data {
         @Expose
         private List<Datas> datas;
@@ -90,15 +97,11 @@ public class HomeResult {
         return data;
     }
 
-    public void setProjectData(Data data) {
-        this.data = data;
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
-    public int getCurPage() {
-        return curPage;
-    }
-
-    public void setCurPage(int curPage) {
-        this.curPage = curPage;
+    public int getErrorCode() {
+        return errorCode;
     }
 }
